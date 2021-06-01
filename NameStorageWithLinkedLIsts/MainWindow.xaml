@@ -1,0 +1,43 @@
+﻿<Window x:Class="NameStorageWithLinkedLIsts.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NameStorageWithLinkedLIsts"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="400">
+    <Grid>
+        <StackPanel>
+
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="chooseFileButton" Content="Choose File" Margin="10, 0, 10, 0" Click="Button_Click" />
+
+            </Grid>
+
+            <Grid Margin="10, 0, 10, 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="fileNameBox" IsReadOnly="True" Background="#eee" Margin="10, 0, 10, 0" />
+
+            </Grid>
+
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="alphabeticalButton" Content="Alphabetical" Grid.Column="0" Margin="10, 0, 10, 0" Click="alphabeticalButton_Click" />
+                <Button x:Name="reverseAlphabeticalButton" Content="Reverse Alphabetical" Grid.Column="1" Margin="10, 0, 10, 0" Click="reverseAlphabeticalButton_Click" />
+
+            </Grid>
+            <TextBox x:Name="outputBox" Margin="20, 0, 20, 0" IsReadOnly="True" Background="#eee" Height="300" />
+        </StackPanel>
+    </Grid>
+</Window>
