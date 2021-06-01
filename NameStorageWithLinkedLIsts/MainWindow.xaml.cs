@@ -28,6 +28,9 @@ namespace NameStorageWithLinkedLIsts
         {
             InitializeComponent();
         }
+
+        //Method to handle the button click for the file reader.
+        //The method takes in the file, reads through the entire file, stores it in a string, then sends it to splitUp.
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -36,14 +39,35 @@ namespace NameStorageWithLinkedLIsts
                 StreamReader sr = new StreamReader(openFileDialog.FileName);
                 test = sr.ReadToEnd();
                 splitUp(test);
-                fileNameBox.Text = openFileDialog.FileName;
+                setLinkBox = openFileDialog.FileName;
 
-                //listOfNames.add(test);
-                //MessageBox.Show(listOfNames.writeInOrder());
             }
 
         }
 
+        //Getter and setter for the link text box.
+        public String setLinkBox
+        {
+            get => fileNameBox.Text;
+            set
+            {
+                fileNameBox.Text = value;
+            }
+        }
+
+        //Getter and setter for the output box.
+        public String setOutputBox
+        {
+            get => outputBox.Text;
+            set
+            {
+                outputBox.Text = value;
+            }
+        }
+
+        //Method to split up the contents of the file.
+        //Takes the large string in and goes through each character and builds a string until it finds a space.
+        //The built string is then sent to the LinkedList class to be added.
         public void splitUp(String bigString)
         {
             String wordToAdd = "";
@@ -63,14 +87,18 @@ namespace NameStorageWithLinkedLIsts
 
         }
 
+        //Event handler for the alphabetical button click, calls the writeInOrder method and sends it to the output box's setter.
         private void alphabeticalButton_Click(object sender, RoutedEventArgs e)
         {
-            outputBox.Text = listOfNames.writeInOrder();
+            setOutputBox = listOfNames.writeInOrder();
+            //outputBox.Text = listOfNames.writeInOrder();
         }
 
+        //Event handler for the reverse alphabetical button click, calls the writeInReverseOrder method and sends it to the output box's setter.
         private void reverseAlphabeticalButton_Click(object sender, RoutedEventArgs e)
         {
-            outputBox.Text = listOfNames.writeInReverseOrder();
+            setOutputBox = listOfNames.writeInReverseOrder();
+            //outputBox.Text = listOfNames.writeInReverseOrder();
         }
 
     }

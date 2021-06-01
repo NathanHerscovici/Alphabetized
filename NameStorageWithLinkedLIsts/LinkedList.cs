@@ -7,25 +7,33 @@ using System.IO;
 
 namespace NameStorageWithLinkedLIsts
 {
+    //Class definition for the Node class.
     public class Node
     {
         public String value;
         public Node next;
         public Node previous;
     }
+
+    //Class definition for the linked list class.
     public class LinkedList
     {
 
         private Node head;
+        private Node foot;
 
+        //Constructor for the class.
         public LinkedList()
         {
             head = new Node();
         }
 
+        //Method to add a name to the linked list.
         public void add(String toBeStored)
         {
             bool notDone = true;
+
+            //Checks to see if the list has just been created and needs its first node.
             if (head.value == null)
             {
                 Node toAdd = new Node();
@@ -43,8 +51,12 @@ namespace NameStorageWithLinkedLIsts
                 {
 
                     currentData = search.value;
-                    if (currentData[0] > toBeStored[0])
+                    int comparison = String.Compare(toBeStored, currentData);
+
+                    //Checks to see if the incoming name is alphabetically before the current node.
+                    if (comparison < 0)
                     {
+                        //If the current node is the head a node is added before the head, then the head is set as the new node.
                         if (search == head)
                         {
                             Node toAdd = new Node();
@@ -54,6 +66,7 @@ namespace NameStorageWithLinkedLIsts
                             head = toAdd;
                             notDone = false;
                         }
+                        //The node is added before the current node.
                         else
                         {
 
@@ -67,51 +80,43 @@ namespace NameStorageWithLinkedLIsts
 
                         }
                     }
-                    else if (currentData[0] == toBeStored[0])
+                    //Checks to see if the incoming name is alphabetically the same as the current node.
+                    else if (comparison == 0)
                     {
-                        bool stillTheSame = true;
-                        int i = 1;
-                        while (stillTheSame == true)
+                        //If the current node is the head a node is added before the head, then the head is set as the new node.
+                        if (search != head)
                         {
-                            if (currentData[i] == toBeStored[i])
-                                i++;
-                            else
-                                stillTheSame = false;
+                            Node toAdd = new Node();
+                            toAdd.value = toBeStored;
+                            toAdd.next = search;
+                            toAdd.previous = searchBehind;
+                            searchBehind.next = toAdd;
                         }
-
-                        if (currentData[i] > toBeStored[i])
+                        ////The node is added before the current node.
+                        else
                         {
-
-                            if (search != head)
-                            {
-                                Node toAdd = new Node();
-                                toAdd.value = toBeStored;
-                                toAdd.next = search;
-                                toAdd.previous = searchBehind;
-                                searchBehind.next = toAdd;
-                            }
-                            else
-                            {
-                                Node toAdd = new Node();
-                                toAdd.value = toBeStored;
-                                toAdd.next = head;
-                                head.previous = toAdd;
-                                head = toAdd;
-                                notDone = false;
-                            }
+                            Node toAdd = new Node();
+                            toAdd.value = toBeStored;
+                            toAdd.next = head;
+                            head.previous = toAdd;
+                            head = toAdd;
+                            notDone = false;
                         }
-
                     }
+                    //The default situation, which is when the incoming name comes after the current node.
                     else
                     {
+                        //If there is no next node in the list the node will be tacked onto the end and the foot is incremented.
                         if (search.next == null)
                         {
                             Node toAdd = new Node();
                             toAdd.value = toBeStored;
                             search.next = toAdd;
                             toAdd.previous = search;
+                            foot = toAdd;
                             notDone = false;
                         }
+                        //Otherwise the variables used to search through the list are moved forward.
                         else
                         {
                             search = search.next;
@@ -130,6 +135,8 @@ namespace NameStorageWithLinkedLIsts
 
         }
 
+        //The method to write the names to be sent in order.
+        //A string to be returned is built by a variable running through the list in order and building a string of all the names.
         public String writeInOrder()
         {
 
@@ -149,19 +156,16 @@ namespace NameStorageWithLinkedLIsts
 
         }
 
+        //The method to write the names to be sent in reverse order.
+        //A string to be returned is built by a variable running through the list in reverse order and building a string of all the names.
         public String writeInReverseOrder()
         {
 
             Node runThrough = new Node();
-            runThrough = head;
+            runThrough = foot;
             String building = "";
 
-            while(runThrough.next != null)
-            {
-                runThrough = runThrough.next;
-            }
-
-            while(runThrough.previous != null)
+            while (runThrough.previous != null)
             {
                 building += " " + runThrough.value;
                 runThrough = runThrough.previous;
